@@ -1,0 +1,3 @@
+[submodule "cwl-commandlinetools"]
+	path = cwl-commandlinetools
+	url = https://github.com/msk-access/cwl-commandlinetools
