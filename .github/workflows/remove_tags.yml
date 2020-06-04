@@ -13,5 +13,7 @@ jobs:
       - name: Remove y tags
         run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:y/d'
       - uses: EndBug/add-and-commit@v4
+        with:
+          ref: ${{ github.head_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
