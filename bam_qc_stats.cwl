@@ -7,8 +7,8 @@ $namespaces:
 inputs:
   - id: input
     type: File
-    'sbg:x': -642.487060546875
-    'sbg:y': -142.551025390625
+    'sbg:x': -639.8468627929688
+    'sbg:y': -271.18890380859375
   - id: bait_intervals
     type: File
     'sbg:x': -636.1094970703125
@@ -21,6 +21,10 @@ inputs:
     type: File
     'sbg:x': -632.2830200195312
     'sbg:y': 312.79693603515625
+  - id: target_intervals
+    type: File?
+    'sbg:x': -637.0272216796875
+    'sbg:y': -122.21611022949219
 outputs:
   - id: hs_metrics_file
     outputSource:
@@ -74,67 +78,111 @@ outputs:
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/gc_bias_summary_metrics
     type: File?
-    'sbg:x': 597.146728515625
-    'sbg:y': -666.968505859375
+    'sbg:x': 394.1788635253906
+    'sbg:y': -1051.360107421875
   - id: insert_size_histogram_pdf
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/insert_size_histogram_pdf
     type: File?
-    'sbg:x': 596.0621337890625
-    'sbg:y': -791.6973266601562
+    'sbg:x': 768.39794921875
+    'sbg:y': -240.84767150878906
   - id: insert_size_metrics
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/insert_size_metrics
     type: File?
-    'sbg:x': 597.146728515625
-    'sbg:y': -927.2721557617188
+    'sbg:x': 769.39794921875
+    'sbg:y': -351.4950256347656
   - id: pre_adapter_detail_metrics
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/pre_adapter_detail_metrics
     type: File?
-    'sbg:x': 596.0621337890625
-    'sbg:y': -1062.8470458984375
+    'sbg:x': 770.9332275390625
+    'sbg:y': -438.32501220703125
   - id: pre_adapter_summary_metrics
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/pre_adapter_summary_metrics
     type: File?
-    'sbg:x': 163.30726623535156
-    'sbg:y': -738.552001953125
+    'sbg:x': 753.716552734375
+    'sbg:y': -522.5025634765625
   - id: quality_by_cycle_metrics
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/quality_by_cycle_metrics
     type: File?
-    'sbg:x': 156.79966735839844
-    'sbg:y': -889.3112182617188
+    'sbg:x': 749.2518310546875
+    'sbg:y': -622.7972412109375
   - id: quality_by_cycle_pdf
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/quality_by_cycle_pdf
     type: File?
-    'sbg:x': 142.69989013671875
-    'sbg:y': -1016.2092895507812
+    'sbg:x': 760.6044311523438
+    'sbg:y': -739.6561889648438
   - id: quality_distribution_metrics
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/quality_distribution_metrics
     type: File?
-    'sbg:x': 122.09251403808594
-    'sbg:y': -1147.4456787109375
+    'sbg:x': 768.4923706054688
+    'sbg:y': -855.4446411132812
   - id: quality_distribution_pdf
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/quality_distribution_pdf
     type: File?
-    'sbg:x': 115.58492279052734
-    'sbg:y': -1277.590087890625
+    'sbg:x': 761.4923706054688
+    'sbg:y': -970.2330322265625
   - id: base_distribution_by_cycle_pdf
     outputSource:
       - picard_collectmultiplemetrics_2_8_1/base_distribution_by_cycle_pdf
     type: File?
-    'sbg:x': 617.915283203125
-    'sbg:y': -494.55633544921875
+    'sbg:x': 396.4320068359375
+    'sbg:y': -957.953369140625
+  - id: read_counts
+    outputSource:
+      - waltz_count_reads/read_counts
+    type: File
+    'sbg:x': 409.0119323730469
+    'sbg:y': 82.19341278076172
+  - id: fragment_sizes
+    outputSource:
+      - waltz_count_reads/fragment_sizes
+    type: File
+    'sbg:x': 407.8551025390625
+    'sbg:y': 197.87574768066406
+  - id: covered_regions
+    outputSource:
+      - waltz_count_reads/covered_regions
+    type: File
+    'sbg:x': 406.69830322265625
+    'sbg:y': 321.6558532714844
+  - id: pileup_without_duplicates
+    outputSource:
+      - waltz_pileupmetrics/pileup_without_duplicates
+    type: File
+    'sbg:x': 408.73077392578125
+    'sbg:y': 487.15863037109375
+  - id: pileup
+    outputSource:
+      - waltz_pileupmetrics/pileup
+    type: File
+    'sbg:x': 405.4356689453125
+    'sbg:y': 631.0457153320312
+  - id: intervals_without_duplicates
+    outputSource:
+      - waltz_pileupmetrics/intervals_without_duplicates
+    type: File
+    'sbg:x': 398.84539794921875
+    'sbg:y': 768.342529296875
+  - id: intervals
+    outputSource:
+      - waltz_pileupmetrics/intervals
+    type: File
+    'sbg:x': 406.5340270996094
+    'sbg:y': 915.5183715820312
 steps:
   - id: picard_collectmultiplemetrics_2_8_1
     in:
       - id: input
         source: input
+      - id: intervals_file
+        source: target_intervals
     out:
       - id: alignment_summary_metrics
       - id: bait_bias_detail_metrics
@@ -162,6 +210,8 @@ steps:
     in:
       - id: bait_intervals
         source: bait_intervals
+      - id: target_intervals
+        source: target_intervals
       - id: input
         source: input
     out:
