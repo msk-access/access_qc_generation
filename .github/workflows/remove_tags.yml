@@ -1,0 +1,13 @@
+name: Remove_SBG_x_y_Tags
+on: pull_request
+jobs:
+  remove_tags:
+    runs-on: macos-latest
+    steps:
+      - name: Remove x tags
+        run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:x/d'
+      - name: Remove y tags
+        run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:y/d'
+      - uses: EndBug/add-and-commit@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
