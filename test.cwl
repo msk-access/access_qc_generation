@@ -7,5 +7,3 @@ $namespaces:
 inputs:
   - id: input
     type: File
-    'sbg:x': -639.8468627929688
-    'sbg:y': -271.18890380859375
