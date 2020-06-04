@@ -9,9 +9,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: Remove x tags
-        run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:x/d'
+        run: find . -name "*.cwl" -type f | xargs sed -i "" '/sbg:x/d'
       - name: Remove y tags
-        run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:y/d'
+        run: find . -name "*.cwl" -type f | xargs sed -i "" '/sbg:y/d'
       - uses: EndBug/add-and-commit@v4
         with:
           ref: ${{ github.head_ref }}
