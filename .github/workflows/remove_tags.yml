@@ -4,6 +4,8 @@ jobs:
   remove_tags:
     runs-on: macos-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
       - name: Remove x tags
         run: find . -name "*.cwl" -type f | xargs sed -i -e '/sbg:x/d'
       - name: Remove y tags
